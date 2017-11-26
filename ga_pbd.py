@@ -130,6 +130,7 @@ class GA():
         self.generation += 1
         show_path = [(self.map[i][0], self.map[i][1]) for i in self.best_life.gene_path]
         show_path.append((self.map[self.best_life.gene_path[0]][0], self.map[self.best_life.gene_path[0]][1]))
+        print(self.generation)
         return show_path, self.relate_error
 
 def initialize():
