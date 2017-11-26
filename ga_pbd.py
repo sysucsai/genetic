@@ -8,7 +8,7 @@ class Life():
         self.score = -1
 
 class GA():
-    def __init__(self, crate, mrate, lcount, tsp = r"data\eil101.tsp", opt = r"data\eil101.opt.tour"):
+    def __init__(self, crate = 0.7, mrate = 0.02, lcount = 100, tsp = r"data\eil101.tsp", opt = r"data\eil101.opt.tour"):
         self.cross_rate = crate
         self.mutation_rate = mrate
         self.life_count = lcount
@@ -18,7 +18,7 @@ class GA():
         self.lives = []
         self.best_life = None
         self.best_dis = 0.0
-        self.relate_error = 100.0
+        self.relate_error = 1.0
         self.generation = 1
         self.cross_count = 0
         self.mutation_count = 0
@@ -40,7 +40,14 @@ class GA():
             random.shuffle(path)
             life = Life(path)
             self.lives.append(life)
+        self.best_life = None
+        self.best_dis = 0.0
+        self.relate_error = 1.0
+        self.generation = 1
+        self.cross_count = 0
+        self.mutation_count = 0
         #initial distance tuple
+        self.dis = []
         for i in range(n):
             self.dis.append([])
             for j in range(n):
@@ -50,10 +57,9 @@ class GA():
         self.std_dis = self.dis_cal(self.std_path)
 
     def dis_cal(self, path):
-        n = len(path)
         distance = 0
-        for i in range(n):
-	        distance += self.dis[path[i]][path[(i+1)%n]]
+        for i in range(self.city_count):
+	        distance += self.dis[path[i]][path[(i+1)%self.city_count]]
         return distance
 
     def judge(self):
@@ -133,8 +139,8 @@ def next():
     pass
 
 if __name__ == '__main__':
-    ga = GA(0.7, 0.02, 200)
-    for i in range(10000):
+    ga = GA(0.8, 0.05, 200)
+    while(ga.relate_error > 0.10):
         ga.next_()
         print(ga.generation, " distance: ", ga.best_dis, ", relative error: ", ga.relate_error*100, "%")
 
