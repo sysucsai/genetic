@@ -1,6 +1,4 @@
 import re
-import show_path
-
 
 def read_file(file_name):
 	file_name = file_name
@@ -48,8 +46,3 @@ def readin(file = r"data\ulysses16.tsp"):
 	city_num = detect_city_num(data)
 	city_coordinate = get_city_coordinate(data,city_num)
 	return city_num, city_coordinate
-
-if __name__ == '__main__':
-	'''运行sample'''
-	print(readin())
-	show_path.plot(readin()[1])

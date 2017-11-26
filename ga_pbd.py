@@ -3,13 +3,13 @@ import readin
 import read_ans
 
 def initial_dis(n, map):
-	global dis
-	for i in range(n):
+    global dis
+    for i in range(n):
 	    dis.append([])
 	    for j in range(n):
 	        dis[i].append(((map[i][0]-map[j][0])**2 + (map[i][1]-map[j][1])**2) ** 0.5)
 	    dis[i] = tuple(dis[i])
-	dis = tuple(dis)
+    dis = tuple(dis)
 
 
 def dis_cal(path):
@@ -30,7 +30,7 @@ class GA():
         self.cross_rate = crate
         self.mutation_rate = mrate
         self.life_count = lcount
-        self.city_count = length
+        self.city_count = ccount
         self.lives = []
         self.best_life = None
         self.generation = 1
@@ -93,7 +93,7 @@ class GA():
         parent1 = self.getOne()
         
         rate1 = random.random()
-        if rate < self.cross_rate:
+        if rate1 < self.cross_rate:
             parent2 = self.getOne()
             order = self.cross(parent1, parent2)
         else :
@@ -119,7 +119,7 @@ class GA():
 def read(tsp, opt):
     n, map = readin.readin(tsp)
     std_path = read_ans.read_ans(n, opt)
-    global ga = GA(map, std_path, 0.7, 0.02, 100, n)
+    return n, map, std_path
 
 def next():
     ga.next_()
@@ -128,9 +128,12 @@ def next():
     #return ga.next_()
 
 if __name__ == '__main__':
-    read(r"data\eil101.tsp", r"data\eil101.opt.tour")
+    n, map, std_path = read(r"data\eil101.tsp", r"data\eil101.opt.tour")
+    ga = GA(map, std_path, 0.7, 0.02, 100, n)
     for i in range(100):
-        next()
+        ga.next_()
+        bd = dis_cal(ga.best_life.coordinate)
+        print(ga.generation, " : ", bd)
 
 
 
