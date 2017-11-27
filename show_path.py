@@ -1,8 +1,5 @@
 import matplotlib.pyplot as plt
-<<<<<<< HEAD
 import matplotlib.animation as animation
-=======
->>>>>>> 51477b6f368ff680995da1a5fae5bf5a78a56d74
 import readin
 import read_ans
 '''def initialize(std_path):
@@ -45,25 +42,19 @@ def animation(city_coordinate, std_path, dif):
 	plt.subplot(1, 2, 2)
 	plt.scatter(*zip(*right_path))
 	plt.plot(*zip(*right_path))
-<<<<<<< HEAD
 	plt.pause(0.00000001)
-=======
 	#plt.pause(0.000000000000000000000000000000001)
 	plt.show()
->>>>>>> 51477b6f368ff680995da1a5fae5bf5a78a56d74
 
 def animation_only_myAns(city_coordinate):
 	plt.clf()
 	plt.scatter(*zip(*city_coordinate))
 	plt.plot(*zip(*city_coordinate))
-<<<<<<< HEAD
 	plt.pause(0.000001)
 
 
 def test(fig):
 	ani = animation.FuncAnimation(fig,None, None, fames = 50, interval=2 * 1000)
 	plt.show()
-=======
 	plt.show()
 	#plt.pause(0.000000000000000000000000000000001)
->>>>>>> 51477b6f368ff680995da1a5fae5bf5a78a56d74
