@@ -1,6 +1,7 @@
 import random
 import readin
 import read_ans
+import math
 
 class Life():
     def __init__(self, path = None):
@@ -59,14 +60,15 @@ class GA():
     def dis_cal(self, path):
         distance = 0
         for i in range(self.city_count):
-	        distance += self.dis[path[i]][path[(i+1)%self.city_count]]
+            distance += self.dis[path[i]][path[(i+1)%self.city_count]]
         return distance
 
     def judge(self):
         self.bounds = 0.0
         self.best_life = self.lives[0]
         for i in range(self.life_count):
-            self.lives[i].score = 10000.0/self.dis_cal(self.lives[i].gene_path)
+            fit = 1.0/self.dis_cal(self.lives[i].gene_path)
+            self.lives[i].score = math.exp(fit * self.generation)
             self.bounds += self.lives[i].score
             if self.best_life.score < self.lives[i].score:
                 self.best_life = self.lives[i]
@@ -130,7 +132,7 @@ class GA():
         self.generation += 1
         show_path = [(self.map[i][0], self.map[i][1]) for i in self.best_life.gene_path]
         show_path.append((self.map[self.best_life.gene_path[0]][0], self.map[self.best_life.gene_path[0]][1]))
-        print(self.generation)
+        #print(self.generation)
         return show_path, self.relate_error
 
 def initialize():
@@ -140,8 +142,8 @@ def next():
     pass
 
 if __name__ == '__main__':
-    ga = GA(0.8, 0.05, 200)
-    while(ga.relate_error > 0.10):
+    ga = GA(0.95, 0.05, 100)
+    while(ga.relate_error > 0.05):
         ga.next_()
         print(ga.generation, " distance: ", ga.best_dis, ", relative error: ", ga.relate_error*100, "%")
 
