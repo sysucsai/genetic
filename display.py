@@ -3,13 +3,15 @@ import random
 import std_path
 import readin
 import ga_pbd
+import genetic_djh
+
 #import fgn_2_main
 import sa
 #import hill_climbing_main
 #import hc
 #这里要import原主函数里的“头文件”
 import matplotlib
-matplotlib.use("Qt5Agg")
+#matplotlib.use("Qt5Agg")
 
 from PyQt5 import QtCore
 from PyQt5.QtWidgets import *
