@@ -103,12 +103,15 @@ class MyDynamicMplCanvas(MyMplCanvas):
                 self.obh.init(group_size, children_size, pc, pm, cross_type, None, mutate_type, select_type, iter_count, std_ans)
                 path = std_path.read_ini_path()
                 path.append(path[0])
-                ob = sa.Sa(r"data\eil101.tsp")
-                dif = ob.get_dif()
+                dif = (1 / self.obh._best_fit - std_ans) / std_ans
             elif mode2 == 'ga_run':
-            	self.obh.next_step()
-            	path = self.obh._best_path
-            	dif = 1;
+                self.obh.next_step()
+                mapp = tuple(self.obh._map)
+                path = [(mapp[i][0], mapp[i][1]) for i in self.obh._best_path]
+                path.append(path[0])
+                std_pth = read_ans.read_ans(self.obh._n, r"data\eil101.opt.tour")
+                std_ans = 1 / self.obh._fit(std_pth)
+                dif = (1 / self.obh._best_fit - std_ans) / std_ans
             lf_title = "GA Deviation degree:" + str(round(dif*100,2)) + '%'
 
         self.axes.scatter(*zip(*path))
@@ -138,9 +141,9 @@ class ApplicationWindow(QMainWindow):
         sc = MyStaticMplCanvas(self.main_widget, width=5, height=4, dpi=100)
         dc = MyDynamicMplCanvas('sa',self.main_widget, width=5, height=4, dpi=100)
         ec = MyDynamicMplCanvas('ga',self.main_widget, width=5, height=4, dpi=100)
-        l.addWidget(sc,0,0)
-        l.addWidget(dc,0,1)
-        l.addWidget(ec,1,1)
+        l.addWidget(sc,0,1)
+        l.addWidget(dc,0,0)
+        l.addWidget(ec,0,2)
 
 
 
@@ -149,7 +152,7 @@ class ApplicationWindow(QMainWindow):
         self.btn3.resize(self.btn3.sizeHint())
         #这里改成启动程序
         self.btn3.clicked.connect(set_start)
-        l.addWidget(self.btn3,1,0)
+        l.addWidget(self.btn3,1,1)
 
         self.main_widget.setFocus()
         self.setCentralWidget(self.main_widget)

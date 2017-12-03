@@ -4,6 +4,7 @@ import time
 import read_ans
 import readin
 import show_path
+import std_path
 
 class object:
     def __init__(self, path = None, fit = None):
@@ -17,6 +18,8 @@ class Genetic:
         self._dis = [[None for i in range(self._n)] for j in range(self._n)]
         self._dis_init()
         self.finish = True
+        self.dif = 1
+        self.dis = []
 
     def init(self, group_size, children_size, pc, pm, cross_type, cross_count, mutate_type, select_type, iter_count, goal):
         self._group_size = group_size   # 种群大小
@@ -300,6 +303,7 @@ class Genetic:
 
     def get_result(self):
         return 1 / self._best_fit, self._best_path
+
 
 if __name__ == "__main__":
     #n, map = readin.readin(r"data\att48.tsp")
