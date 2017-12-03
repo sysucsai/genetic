@@ -12,9 +12,8 @@ class object:
         self.fit = fit
 
 class Genetic:
-    def __init__(self, n, map):
-        self._n = n
-        self._map = map
+    def __init__(self, tsp = r"data\eil101.tsp"):
+        self._n, self._map = readin.readin(tsp)
         self._dis = [[None for i in range(self._n)] for j in range(self._n)]
         self._dis_init()
         self.finish = True

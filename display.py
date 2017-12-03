@@ -4,6 +4,7 @@ import std_path
 import readin
 import ga_pbd
 import genetic_djh
+import read_ans
 
 #import fgn_2_main
 import sa
@@ -58,7 +59,7 @@ class MyDynamicMplCanvas(MyMplCanvas):
         timer.start(10)
         self.mywork = mywork
         self.obj = sa.Sa(r"data\eil101.tsp")
-        self.obh = ga_pbd.GA(r"data\eil101.tsp")
+        self.obh = genetic_djh.Genetic(r"data\eil101.tsp")
 
     def compute_initial_figure(self):
         self.axes.plot(readin.readin()[1])
@@ -87,13 +88,27 @@ class MyDynamicMplCanvas(MyMplCanvas):
                 path = std_path.read_ini_path()
                 path.append(path[0])
             elif mode2 == 'ga_initial':
-                self.obh = ga_pbd.GA()
+                self.obh = genetic_djh.Genetic(r"data\eil101.tsp")
+                group_size = 100
+                children_size = 10
+                pc = 0.6
+                pm = 0.01
+                cross_type = 2
+                cross_count = None
+                mutate_type = 3
+                select_type = 2
+                iter_count = 1000
+                std_pth = read_ans.read_ans(self.obh._n, r"data\eil101.opt.tour")
+                std_ans = 1 / self.obh._fit(std_pth)
+                self.obh.init(group_size, children_size, pc, pm, cross_type, None, mutate_type, select_type, iter_count, std_ans)
                 path = std_path.read_ini_path()
                 path.append(path[0])
                 ob = sa.Sa(r"data\eil101.tsp")
                 dif = ob.get_dif()
             elif mode2 == 'ga_run':
-                path,dif = self.obh.next_()
+            	self.obh.next_step()
+            	path = self.obh._best_path
+            	dif = 1;
             lf_title = "GA Deviation degree:" + str(round(dif*100,2)) + '%'
 
         self.axes.scatter(*zip(*path))
